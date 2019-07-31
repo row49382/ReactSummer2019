@@ -4,10 +4,10 @@ import './App.css';
 
 /**
  * Gets a random number using default parameters and let ES6 features
- * @param {*} upperLimit the upper limit of the random number 
+ * @param {*} upperLimit the upper limit of the random number, defaulted to 4
  */
 function getRandomNumber(upperLimit = 4) {
-  let rand = (Math.random() * 4)
+  let rand = (Math.random() * upperLimit)
   return rand
 }
 
