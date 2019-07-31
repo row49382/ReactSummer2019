@@ -1,0 +1,35 @@
+React Course Notes - 7/24/19
+----------------------------
+* History of frontend frameworks, JS and JSX
+    - DHTML, and the demand for "more" from your frontends
+    - Browser wars starting in 1995 between IE and Navigator continue today
+    - Early frameworks MooTools (2007), and Scriptaculous (2010) all imperative, great for standardization
+    - Declarative vs Imperative frameworks
+        * review article on declarative vs imperative
+        * with react use declarative style (don't need to tell that much information, just make changes and things happen)
+    - JQuery in 2006, earliest FW for JS
+        * good for getting down into the DOM, not simple or easy to work with
+        * can still be used in React
+    - AngularJS in 2009, good but huge
+    - 2010 Backbone, better but still lacked patterns
+    - Along comes React, Angular 2+ and Vue
+        * don't put much focus into Vue is because it doesn't have perspective for clients Magenic work with. Angular and React
+          are the most popular
+* create-react-app
+    - Command line app releae by the FB support team to get apps up quick
+    - look at links for setting up Sass, Typescript and Explore beyond
+    - install create-react-app globally
+        * npm install -g create-react-app
+    - create a project wiht create-react-app
+        * create-react-app <APP_NAME>
+    - test your code
+        * npm test
+    - start your app
+        * npm start
+    
+* for extensions for VS, use beautify
+* after app creation
+    - index.html
+        * root is where react is bound
+    - app.JS
+        * returns html like syntax (jsx)
