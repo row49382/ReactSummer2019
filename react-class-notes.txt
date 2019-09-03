@@ -33,3 +33,92 @@ React Course Notes - 7/24/19
         * root is where react is bound
     - app.JS
         * returns html like syntax (jsx)
+
+React Course Notes - 7/31/19
+----------------------------
+* Typescript setup
+    - npx create-react-app <APP_NAME> --Typescript
+* Components
+    - Can be created with:
+        * React.createElement
+            - Ex. React.createElement('div', {}, React.CreateElement('h1', {}, 'Hello World'))
+            - Not used
+        * JSX   
+            - render() {
+                return <div><h1>Hello World</h1></div>
+            }
+            - always a top rooted element
+    - Two Types
+        * Class based components   
+            - use this.props, has state and lifecycle
+        * Functional based components
+            - props are passed as an argument
+* Compenents with react
+    - Higher order Component
+* state
+    - class components have state
+    - props are readonly, while state is change (asynchronous)
+    - state is private, encapsulated by the component, only accessed by this.state
+      while props can be passed in by argument to funcational based components
+    - can be modified by this.setState, else can be set directly in the constructor
+        * causes a re-render with new state values
+        * state is merged, data flows down
+* State with Redux
+    - As Redux replaces the need for most of this.state, there are still times
+      where internal changes to the component may be desired, in which case it's fine to still use
+      this.state
+* lifecycle events
+    - Constructor: generally not needed except for setting state
+        - you can bind methods, but with ES6 functional notication, you won't need bind methods
+    - componentDidMount()
+        - componentDidMount(), invoked immediately after the component is mounted
+          Good for http calls to get data. It is ok, to immediately setState here though there is a minor performance History
+    - componentDidUpdate()
+        - make changes due to state changes from this.state or Redux
+    - componentWillUnmount(), purely cleanup
+    - these are the 3 most used
+* Functions
+    - uses props, but instead of passing a string, pass a function
+    - 4 ways to handle an events
+        <MyComponent onClick={aFunction} />
+        1. wihtout a bind (legacy)
+        2. with a bind in the construcotr (allows you to use this)(legacy)
+        3. Public class fields syntax
+    - Must explicitly call prevent Default, returning false won't work
+* Conditional Rendering
+    - you can do inline conditional rendering within JSX, but it's ugly
+    - use method instead of inline conditions
+* Looping
+    - React needs a key, needs to be unique amongst siblings
+    - trick is to use UUID (npm download)
+
+React Course Notes - 8/7/19
+---------------------------
+* Design patterns
+    - Composition over Inheritance
+    - review react links in Notes
+* Prop Types   
+    - npm install prop-Types
+    - Default props 
+        * great if you want to set a value so that if a paren component does not pass in value
+* Input fields
+    - Reace stat is the source of truth even through html forms naturally track their own state
+    - <input value={value1} onChange={this.func1} />
+        * func1 sets the state of value1 when called
+* Routing
+    - switch statement
+    - <Switch>
+        <Route exact path="/facebook" component={FacebookPage} />
+        ...
+        <Route component={DefaultPage} />
+* Axios, a promised based Http client for the Browser
+    - npm install axios
+* Error boundary
+    - allow you to catch exceptions on components before render
+    - a component is an error boundary if it
+        ** review slides **
+* UX and UI Design
+    - material.io
+    - material-UI: React components that implmeent Google's Material Design
+        * npm install @material/
+    
