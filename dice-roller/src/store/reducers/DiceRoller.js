@@ -2,7 +2,8 @@ import getRandomRoll from "../../randomRoller";
 
 const rollDice = "ROLL_DICE"
 const rollPercentileDice = "ROLL_PERCENTILE_DICE"
-const clearValues = "CLEAR_VALUES"
+const clearRolls = "CLEAR_ROLLS"
+const clearSum = "CLEAR_SUM"
 
 const initialState = {
     rolls: [],
@@ -14,22 +15,33 @@ export const actionCreators = {
     rollStandardDie: (dieFace) => dispatch => {
         dispatch({
             type: rollDice,
-            roll: getRandomRoll(dieFace)
+            payload: {
+                roll: getRandomRoll(dieFace),
+                dieFace: dieFace
+            }
         })
     },
     rollPercentileDice: () => dispatch => {
         let baseZeroRoll = getRandomRoll(10) - 1
-        let baseTenRoll = (getRandomRoll(10) * 10) - 1
+        let baseTenRoll = (getRandomRoll(10) * 10) - 10
         let roll = baseTenRoll + baseZeroRoll
 
         dispatch({
             type: rollPercentileDice,
-            roll: roll
+            payload: {
+                roll: roll === 0 ? 100 : roll,
+                dieFace: "%"
+            }
         })
     },
-    clearValues: () => dispatch => {
+    clearRolls: () => dispatch => {
         dispatch({
-            type: clearValues
+            type: clearRolls
+        })
+    },
+    clearSum: () => dispatch => {
+        dispatch({
+            type: clearSum
         })
     }
 } 
@@ -40,17 +52,24 @@ export const reducer = (state = initialState, action) => {
       case rollPercentileDice:
           return {
               rolls: [
-                  ...state.rolls,
-                  action.roll
+                  ...state.rolls, { 
+                      "roll": action.payload.roll, 
+                      "die": action.payload.dieFace 
+                  }
               ],
-              sum: state.sum + action.roll,
-              lastRoll: action.roll
+              sum: state.sum + action.payload.roll,
+              lastRoll: action.payload.roll
           }
-      case clearValues:
+      case clearRolls:
           return {
+              ...state,
               rolls: [],
-              sum: 0,
               lastRoll: 0
+          }
+      case clearSum:
+          return {
+              ...state,
+              sum: 0
           }
       default:
         return state;

@@ -1,42 +1,58 @@
 import Page from '../shared/Page';
 import PageHeader from '../shared/PageHeader';
 import PageFooter from '../shared/PageFooter';
-import React, { Component } from "react";
+import React from "react";
 import { actionCreators as diceRollerActionCreators } from "../store/reducers/DiceRoller";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import './Homepage.css';
-import RollHistoryTable from './RollHistoryTable';
+import RollHistoryTable from './RollHistoryTable/RollHistoryTable';
 
-class HompageComponent extends Component {
-    constructor(props) {
-      super(props)
-      debugger;
-      this.props = props
-    }
+import Button from '@material-ui/core/Button';
+import { Grid } from '@material-ui/core'
+import DiceRollSum from './DiceRollSum/DiceRollSum';
+import DiceRollButtons from './DiceRollButtons/DiceRollButtons';
+import { Container } from '@material-ui/core';
 
-    render() {
-      debugger;
-      return (
+
+const HompageComponent = (props) => {
+   return (
         <Page>
-          <PageHeader />
-          {/*<RollHistoryTable rolls={this.props.rolls}/>*/}
-          <div>{this.props.lastRoll}</div>
-          <br />
-          <button value="4"  onClick={() => this.props.actions.rollDice(4)}>4</button>
-          <button value="6"  onClick={() => this.props.actions.rollDice(6)}>6</button>
-          <button value="8"  onClick={() => this.props.actions.rollDice(8)}>8</button>
-          <button value="10" onClick={() => this.props.actions.rollDice(10)}>10</button>
-          <button value="12" onClick={() => this.props.actions.rollDice(12)}>12</button>
-          <button value="20" onClick={() => this.props.actions.rollDice(20)}>20</button>
-          <button value="Percentile" onClick={() => this.props.actions.rollPercentiledice}>%</button>
-          <br />
-          <button value="Clear" onClick={() => this.props.actions.clearValues}>Clear</button>
+          <Grid container direction="column" justify="center" alignItems="stretch" spacing={6}>
+          <Grid item>
+            <PageHeader />
+          </Grid>
+          <Grid item>
+          <Grid container direction="row" justify="center" alignItems="stretch" spacing={8}>
+            <Grid item>
+              <RollHistoryTable />
+            </Grid>
+            <Grid item xs={6}>
+              <Container fixed>
+              <Grid container direction="column" justify="center" alignItems="center" spacing={3}>
+                <Grid item>
+                  <div>{props.lastRoll}</div>
+                </Grid>
+                <DiceRollButtons props={props}/>
+                <Grid item>
+                  <Button onClick={() => props.actions.clearRolls()}>Clear History</Button>
+                  <Button onClick={() => props.actions.clearSum()}>Clear Sum</Button>
+                </Grid>
+              </Grid>
+              </Container>
+            </Grid>
+            <Grid item>
+                <DiceRollSum props={props}/>
+            </Grid>
+          </Grid>
+          </Grid>
+          <Grid item>
           <PageFooter />
+          </Grid>
+          </Grid>
         </Page>
       );
-    }
 }
 
 HompageComponent.propTypes = {
@@ -46,9 +62,9 @@ HompageComponent.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    lastRoll: state.lastRoll,
-    sum: state.sum,
-    rolls: state.rolls
+    lastRoll: state.rollDice.lastRoll,
+    sum: state.rollDice.sum,
+    rolls: state.rollDice.rolls
   });
   
 const mapDispatchToProps = dispatch => {
@@ -56,7 +72,8 @@ const mapDispatchToProps = dispatch => {
       actions: bindActionCreators({
           rollDice: diceRollerActionCreators.rollStandardDie,
           rollPercentileDice: diceRollerActionCreators.rollPercentileDice,
-          clearValues: diceRollerActionCreators.clearValues  
+          clearRolls: diceRollerActionCreators.clearRolls,
+          clearSum: diceRollerActionCreators.clearSum  
         },
         dispatch
       )
